@@ -14,13 +14,11 @@ teacher_table = cursor.fetchall()
 #These two lines of code type into the little flashy thing, with the thing being typed the statement in the cursor.execute
 #The line underneath takes the table outputted and assighns the data to the varible teacher_table.
 
-print('''
-████████╗███████╗░█████╗░░█████╗░██╗░░██╗███████╗██████╗░░██████╗██╗
-╚══██╔══╝██╔════╝██╔══██╗██╔══██╗██║░░██║██╔════╝██╔══██╗██╔════╝╚═╝
-░░░██║░░░█████╗░░███████║██║░░╚═╝███████║█████╗░░██████╔╝╚█████╗░░░░
-░░░██║░░░██╔══╝░░██╔══██║██║░░██╗██╔══██║██╔══╝░░██╔══██╗░╚═══██╗░░░
-░░░██║░░░███████╗██║░░██║╚█████╔╝██║░░██║███████╗██║░░██║██████╔╝██╗
-░░░╚═╝░░░╚══════╝╚═╝░░╚═╝░╚════╝░╚═╝░░╚═╝╚══════╝╚═╝░░╚═╝╚═════╝░╚═╝''')
+print('''████████ ███████  █████   ██████ ██   ██ ███████ ██████  ███████ 
+   ██    ██      ██   ██ ██      ██   ██ ██      ██   ██ ██      
+   ██    █████   ███████ ██      ███████ █████   ██████  ███████ 
+   ██    ██      ██   ██ ██      ██   ██ ██      ██   ██      ██ 
+   ██    ███████ ██   ██  ██████ ██   ██ ███████ ██   ██ ███████\n''')
 #This line prints teachers: as an intro to the data that is about to be displayed
 
 for information in teacher_table:
@@ -33,19 +31,22 @@ for information in teacher_table:
     print(f"ID: {information[0]}: {information[1]} {information[2]}\nAge: {information[3]}\nGender: {gender}\nSubject: {information[5]}\
           \nYears of experience {information[6]}\n")
     #using an f string, the code prints out all of the information in a formatted veiw.
+    
+    time.sleep(0.1)
+    #Using time.sleep, the program will pause for the time in the brackets, in this case a tenth of a second, between teachers pronted out.
+    #This helps the formatting of the whole program
 
 cursor.execute('SELECT * FROM student_table')
 student_table = cursor.fetchall()
 #This is the exactly same two lines from before except it gets all the data from the students table instead of the teachers.
 
-print('''\n
-░██████╗████████╗██╗░░░██╗██████╗░███████╗███╗░░██╗████████╗░██████╗██╗
-██╔════╝╚══██╔══╝██║░░░██║██╔══██╗██╔════╝████╗░██║╚══██╔══╝██╔════╝╚═╝
-╚█████╗░░░░██║░░░██║░░░██║██║░░██║█████╗░░██╔██╗██║░░░██║░░░╚█████╗░░░░
-░╚═══██╗░░░██║░░░██║░░░██║██║░░██║██╔══╝░░██║╚████║░░░██║░░░░╚═══██╗░░░
-██████╔╝░░░██║░░░╚██████╔╝██████╔╝███████╗██║░╚███║░░░██║░░░██████╔╝██╗
-╚═════╝░░░░╚═╝░░░░╚═════╝░╚═════╝░╚══════╝╚═╝░░╚══╝░░░╚═╝░░░╚═════╝░╚═╝\n''')
-#Same thing as the teachers except theres a \n for formatting. 
+print('''\n███████ ████████ ██    ██ ██████  ███████ ███    ██ ████████ ███████ 
+██         ██    ██    ██ ██   ██ ██      ████   ██    ██    ██      
+███████    ██    ██    ██ ██   ██ █████   ██ ██  ██    ██    ███████ 
+     ██    ██    ██    ██ ██   ██ ██      ██  ██ ██    ██         ██ 
+███████    ██     ██████  ██████  ███████ ██   ████    ██    ███████ 
+                                                                     \n''')
+#Same thing as the teachers except theres a \n infront as well for formatting. 
 
 for information in student_table:
     if information[4] == 0:
@@ -59,6 +60,11 @@ for information in student_table:
 
     print(f"ID: {information[0]}\nName: {information[1]} {information[2]}\nGender: \
 {gender}\nAge: {information[3]}\nYear level: {information[5]}\nYear credits: {information[6]}\n")
+    #much alike the other line used for the teachers, this line prints out the information in a formatted form.
+
+    time.sleep(0.05)
+    #same as the first time.sleep, this one causes a pause inbetween users for 0.1 seconds for formatting reasons/
+
 
 
 
