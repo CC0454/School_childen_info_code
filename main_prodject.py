@@ -71,8 +71,83 @@ def all_students():
         #same as the first time.sleep, this one causes a pause inbetween users for 0.05 seconds for formatting reasons.
         #The shorter time is there so the user isn't left waiting for too long.
 
+def student_menu():
+    while True:
+        os.system('cls')
+        print("""
+███████ ████████ ██    ██ ██████  ███████ ███    ██ ████████     ███    ███ ███████ ███    ██ ██    ██ 
+██         ██    ██    ██ ██   ██ ██      ████   ██    ██        ████  ████ ██      ████   ██ ██    ██ 
+███████    ██    ██    ██ ██   ██ █████   ██ ██  ██    ██        ██ ████ ██ █████   ██ ██  ██ ██    ██ 
+     ██    ██    ██    ██ ██   ██ ██      ██  ██ ██    ██        ██  ██  ██ ██      ██  ██ ██ ██    ██ 
+███████    ██     ██████  ██████  ███████ ██   ████    ██        ██      ██ ███████ ██   ████  ██████  """)
+        
+        user_input = input("Please enter the number corrosponding to the year level you are searching for. EG (year 9, search 9)\n:")
+        
+        try:
+            user_input = int(user_input)
+        except ValueError:
+            input("\nPlease ensure you are entering a year level on the range of 9 to 13\n(press enter to continue)")
+            os.system('cls')
+            continue
+        if user_input in range(9,14):
+            os.system('cls')
+            cursor.execute('SELECT * FROM student_table WHERE Year_level = ?;', (user_input, ))
+            student_table = cursor.fetchall()
+            year_number = student_print(user_input)
+            print(year_number)
+            for information in student_table:
+                if information[4] == 0:
+                    gender = "Male"
+                elif information[4] == 1:
+                    gender = "Female"
+                else:
+                    gender = "Non-binary"
+                print(f"ID: {information[0]}\nName: {information[1]} {information[2]}\nGender: {gender}\
+                      \nAge: {information[3]}\nYear level: {information[5]}\nYear credits: {information[6]}\n")
+            input("(Press enter to continue)")
+            os.system('cls')
+            break
+            
 
+        else:
+            print("poo")
 
+def student_print(user_input):
+    if user_input == 9:
+        year_level = """██    ██ ███████  █████  ██████       █████      ███████ ████████ ██    ██ ██████  ███████ ███    ██ ████████ ███████ 
+ ██  ██  ██      ██   ██ ██   ██     ██   ██     ██         ██    ██    ██ ██   ██ ██      ████   ██    ██    ██      
+  ████   █████   ███████ ██████       ██████     ███████    ██    ██    ██ ██   ██ █████   ██ ██  ██    ██    ███████ 
+   ██    ██      ██   ██ ██   ██          ██          ██    ██    ██    ██ ██   ██ ██      ██  ██ ██    ██         ██ 
+   ██    ███████ ██   ██ ██   ██      █████      ███████    ██     ██████  ██████  ███████ ██   ████    ██    ███████ """
+        return year_level
+    elif user_input == 10:
+        year_level = """██    ██ ███████  █████  ██████       ██  ██████      ███████ ████████ ██    ██ ██████  ███████ ███    ██ ████████ ███████ 
+ ██  ██  ██      ██   ██ ██   ██     ███ ██  ████     ██         ██    ██    ██ ██   ██ ██      ████   ██    ██    ██      
+  ████   █████   ███████ ██████       ██ ██ ██ ██     ███████    ██    ██    ██ ██   ██ █████   ██ ██  ██    ██    ███████ 
+   ██    ██      ██   ██ ██   ██      ██ ████  ██          ██    ██    ██    ██ ██   ██ ██      ██  ██ ██    ██         ██ 
+   ██    ███████ ██   ██ ██   ██      ██  ██████      ███████    ██     ██████  ██████  ███████ ██   ████    ██    ███████"""
+        return year_level
+    elif user_input == 11:
+        year_level = """██    ██ ███████  █████  ██████       ██  ██     ███████ ████████ ██    ██ ██████  ███████ ███    ██ ████████ ███████ 
+ ██  ██  ██      ██   ██ ██   ██     ███ ███     ██         ██    ██    ██ ██   ██ ██      ████   ██    ██    ██      
+  ████   █████   ███████ ██████       ██  ██     ███████    ██    ██    ██ ██   ██ █████   ██ ██  ██    ██    ███████ 
+   ██    ██      ██   ██ ██   ██      ██  ██          ██    ██    ██    ██ ██   ██ ██      ██  ██ ██    ██         ██ 
+   ██    ███████ ██   ██ ██   ██      ██  ██     ███████    ██     ██████  ██████  ███████ ██   ████    ██    ███████"""
+        return year_level
+    elif user_input == 12:
+        year_level = """██    ██ ███████  █████  ██████       ██ ██████      ███████ ████████ ██    ██ ██████  ███████ ███    ██ ████████ ███████ 
+ ██  ██  ██      ██   ██ ██   ██     ███      ██     ██         ██    ██    ██ ██   ██ ██      ████   ██    ██    ██      
+  ████   █████   ███████ ██████       ██  █████      ███████    ██    ██    ██ ██   ██ █████   ██ ██  ██    ██    ███████ 
+   ██    ██      ██   ██ ██   ██      ██ ██               ██    ██    ██    ██ ██   ██ ██      ██  ██ ██    ██         ██ 
+   ██    ███████ ██   ██ ██   ██      ██ ███████     ███████    ██     ██████  ██████  ███████ ██   ████    ██    ███████"""
+        return year_level
+    else:
+        year_level = """██    ██ ███████  █████  ██████       ██ ██████      ███████ ████████ ██    ██ ██████  ███████ ███    ██ ████████ ███████ 
+ ██  ██  ██      ██   ██ ██   ██     ███      ██     ██         ██    ██    ██ ██   ██ ██      ████   ██    ██    ██      
+  ████   █████   ███████ ██████       ██  █████      ███████    ██    ██    ██ ██   ██ █████   ██ ██  ██    ██    ███████ 
+   ██    ██      ██   ██ ██   ██      ██      ██          ██    ██    ██    ██ ██   ██ ██      ██  ██ ██    ██         ██ 
+   ██    ███████ ██   ██ ██   ██      ██ ██████      ███████    ██     ██████  ██████  ███████ ██   ████    ██    ███████"""
+        return year_level
 while True:
     print(''''
 ███    ███ ███████ ███    ██ ██    ██ 
@@ -80,15 +155,19 @@ while True:
 ██ ████ ██ █████   ██ ██  ██ ██    ██ 
 ██  ██  ██ ██      ██  ██ ██ ██    ██ 
 ██      ██ ███████ ██   ████  ██████\n''')
+    #this is a menu print statment, it prints a menu sign.
     user_input = input("Please enter one option:\n1) Student menu\n2) Teacher menu\n3) Search\n4) Dump database (give all data)\n5) Quit program\n:")
+    #this line takes the user input and assighns it to the varible user_input
+    
     try:
         user_input = int(user_input)
     except ValueError:
         input("\nPlease ensure you are entering a number on the range of 1 to 5.\n(press enter to continue)")
         os.system('cls')
         continue
+    #these few lines use try and except to check if the input is a number, it tries to convert the varible to a ineger and if it can't it tells the user and resets the menu.
     if user_input == 1:
-        pass
+        student_menu()
     elif user_input == 2:
         pass
     elif user_input == 3:
@@ -104,3 +183,4 @@ while True:
         input("\nPlease ensure you are entering a number on the range of 1 to 5.\n(press enter to continue)")
         os.system('cls')
         continue
+    #these lines check if the number is on the range of 1 - 5 and uses a definition accordingly. if the number enterd isn't on one to five, the code tells the user and resets the menu. 
