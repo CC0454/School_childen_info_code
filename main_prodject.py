@@ -32,7 +32,7 @@ def all_teachers():
         #In these five lines, the code makes a loop that will cycle through the list teacher_table, taking out each part of the 2d list and assigning it to a vatible.
         #The four next four lines checks if the gender is a 1 or a 0, 0 being male and 1 being female. It then assigns the gender to a varible called varible
         print(f"ID: {information[0]}: {information[1]} {information[2]}\nAge: {information[3]}\nGender: {gender}\nSubject: {information[5]}\
-            \nYears of experience {information[6]}\n")
+            \nYears of experience: {information[6]}\n")
         #using an f string, the code prints out all of the information in a formatted veiw.
         
         time.sleep(0.1)
@@ -70,10 +70,7 @@ def all_students():
 
         time.sleep(0.05)
         #same as the first time.sleep, this one causes a pause inbetween users for 0.05 seconds for formatting reasons.
-        #The shorter time is there so the user isn't left waiting for too long.
-    input("\n(press enter to continue)")
-    os.system('cls')
-    #These two lines prepear to return the user to the menu, request for them to press enter when finished and thn clears the terminal
+        #The shorter time is there so the user isn't left waiting for too long.   
 
 def student_menu():
     while True:
@@ -138,6 +135,7 @@ def student_menu():
             #these two lines tell the user they've done somthing wrong, wait for them to tell the program to proceed then clear the terminal, printing the student menu again
 
 def student_print(user_input):
+
     if user_input == 9:
         year_level = """██    ██ ███████  █████  ██████       █████      ███████ ████████ ██    ██ ██████  ███████ ███    ██ ████████ ███████ 
  ██  ██  ██      ██   ██ ██   ██     ██   ██     ██         ██    ██    ██ ██   ██ ██      ████   ██    ██    ██      
@@ -203,14 +201,22 @@ while True:
         student_menu()
     #this line calls on the function stundent_menu
     elif user_input == 2:
-        pass
+        os.system('cls')
+        all_teachers()
+        #this line calles on the function all_teachers
+        input("\n(Press enter to continue)")
+        os.system('cls')
+        #These two lines prepear to return the user to the menu, request for them to press enter when finished and then clears the terminal
     elif user_input == 3:
         pass
     elif user_input == 4:
         os.system('cls')
         all_teachers()
         all_students()
-    #this line clears the terminal of the menu then prints all the teachers, followed by all the students.
+        #this line clears the terminal of the menu then prints all the teachers, followed by all the students.
+        input("\n(Press enter to continue)")
+        os.system('cls') 
+        #These two lines prepear to return the user to the menu, request for them to press enter when finished and then clears the terminal
     elif user_input == 5:
         print("\n Thanks for using the program!")
         time.sleep(1)
