@@ -45,11 +45,12 @@ def all_students():
     student_table = cursor.fetchall()
     #This is the exactly same two lines from before except it gets all the data from the students table instead of the teachers.
 
-    print('''\n███████ ████████ ██    ██ ██████  ███████ ███    ██ ████████ ███████ 
+    print('''\n
+    ███████ ████████ ██    ██ ██████  ███████ ███    ██ ████████ ███████ 
     ██         ██    ██    ██ ██   ██ ██      ████   ██    ██    ██      
     ███████    ██    ██    ██ ██   ██ █████   ██ ██  ██    ██    ███████ 
-        ██    ██    ██    ██ ██   ██ ██      ██  ██ ██    ██         ██ 
-    ███████    ██     ██████  ██████  ███████ ██   ████    ██    ████████
+         ██    ██    ██    ██ ██   ██ ██      ██  ██ ██    ██         ██ 
+    ███████    ██     ██████  ██████  ███████ ██   ████    ██    ███████
                                                                         \n''')
     #Same thing as the teachers except theres a \n infront as well for formatting. 
 
@@ -70,7 +71,7 @@ def all_students():
         time.sleep(0.05)
         #same as the first time.sleep, this one causes a pause inbetween users for 0.05 seconds for formatting reasons.
         #The shorter time is there so the user isn't left waiting for too long.
-    input("\nPlease ensure you are entering a year level on the range of 9 to 13\n(press enter to continue)")
+    input("\n(press enter to continue)")
     os.system('cls')
     #These two lines prepear to return the user to the menu, request for them to press enter when finished and thn clears the terminal
 
