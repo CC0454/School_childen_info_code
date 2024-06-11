@@ -179,6 +179,141 @@ def student_print(user_input):
     #what this whole thing does is take one argument which is set as user_input on the other end and checks which number it is on the scale from 9 - 13
     #It then takes that number and assigns another varible a menu decal accordingly using the return function.
 
+def search():
+    while True:
+        print('''
+███████ ███████  █████  ██████   ██████ ██   ██ 
+██      ██      ██   ██ ██   ██ ██      ██   ██ 
+███████ █████   ███████ ██████  ██      ███████ 
+     ██ ██      ██   ██ ██   ██ ██      ██   ██ 
+███████ ███████ ██   ██ ██   ██  ██████ ██   ██\n''')
+        user_input = input("Please enter one option:\n1) Search students\n2) Search teachers\n3) Exit search\n:")
+        try:
+            user_input = int(user_input)
+        except ValueError:
+            input("\nPlease ensure you are entering a number on the range of 1 to 2.\n(press enter to continue)")
+            os.system('cls')
+            continue
+        if user_input == 1:
+            student_search()
+        elif user_input == 2:
+            teacher_search()
+        elif user_input == 3:
+            os.system('cls')
+            break
+        else:
+            input("\nPlease ensure you are entering a number on the range of 1 to 3.\n(press enter to continue)")
+            os.system('cls')
+
+def student_search():
+
+    user_choice = input("\nPlease enter one option:\n1) Search by ID\n2) Search by first name\n3) Search by last name\n:")
+    try:
+        user_choice = int(user_choice)
+    except ValueError:
+        input("Please ensure you are entering a number on a range of 1 to 3\n(Press enter to continue)")
+        os.system('cls')
+        return
+    if user_choice == 1:
+        query = "SELECT * FROM student_table WHERE ID = ?"
+        user_search = input("\nEnter the ID you are searching for\n:")
+        error = "There is no student ID in the database that matches "
+    elif user_choice == 2:
+        query = "SELECT * FROM student_table WHERE First_name = ?"
+        user_search = input("\nPlease enter the first name you are searching for\n:")
+        error = "There is no student first name in the database that matches "
+    elif user_choice == 3:
+        query = "SELECT * FROM student_table WHERE Last_name = ?"
+        user_search = input("\nPlease enter the last name that you are searching for\n:")
+        error = "There is no student last name in the database that matches "
+    else:
+        input("Please ensure you are entering a number on a range of 1 to 3\n(Press enter to continue)")
+        os.system('cls')
+        return
+    user_search_cap = user_search.capitalize()
+    cursor.execute(query, (user_search_cap, ))
+    student_information = cursor.fetchall()
+    if student_information == []:
+       input(error + str(user_search) + "\n(Press enter to continue)")
+       os.system('cls')
+       return
+    
+    for information in student_information:
+        if information[4] == 0:
+            gender = "Male"
+        elif information[4] == 1:
+            gender = "Female"
+        else:
+            gender = "Non-binary"
+        
+        if information[6] <= 50:
+            condition = "They have " +  str(information[6]) + " credits and isn't on track to pass the year."
+        elif information[6] > 50 and information[6] < 80:
+            condition = "They have " + str(information[6]) + " credits and are on track to pass this year."
+        else:
+            condition = "They have " + str(information[6]) + " credits and have passed the year."
+        
+        print(f"\nID: {information[0]}\n{information[1]} {information[2]} is {information[3]} years old in year {information[5]}.\nTheir gender is {gender}")
+        print(condition)
+
+        input("(press enter to continue)")
+        os.system('cls')
+        return
+
+def teacher_search():
+    user_choice = input("\nPlease enter one option:\n1) Search by ID\n2) Search by first name\n3) Search by last name\n:")
+    try:
+        user_choice = int(user_choice)
+    except ValueError:
+        input("Please ensure you are entering a number on a range of 1 to 3\n(Press enter to continue)")
+        os.system('cls')
+        return
+    if user_choice == 1:
+        query = "SELECT * FROM teacher_table WHERE ID = ?"
+        user_search = input("\nEnter the ID you are searching for\n:")
+        error = "There is no teacher ID in the database that matches "
+        try:
+            user_search = int(user_search)
+        except ValueError:
+            input("Please ensure you are entering an number ID\n(Press enter to continue)")
+            os.system('cls')
+            return
+    elif user_choice == 2:
+        query = "SELECT * FROM teacher_table WHERE First_name = ?"
+        user_search = input("\nPlease enter the first name you are searching for\n:")
+        error = "There is no teacher first name in the database that matches "
+        user_search = user_search.capitalize()
+    elif user_choice == 3:
+        query = "SELECT * FROM teacher_table WHERE Last_name = ?"
+        user_search = input("\nPlease enter the last name that you are searching for\n:")
+        error = "There is no teacher last name in the database that matches "
+        user_search = user_search.capitalize()
+    else:
+        input("Please ensure you are entering a number on a range of 1 to 3\n(Press enter to continue)")
+        os.system('cls')
+        return
+    
+    cursor.execute(query, (user_search, ))
+    teacher_information = cursor.fetchall()
+    print(teacher_information)
+
+    if teacher_information == []:
+       input(error + str(user_search) + "\n(Press enter to continue)")
+       os.system('cls')
+       return
+    
+    for information in teacher_information:
+        if information[4] == 0:
+            gender = "Male"
+        else:
+            gender = "Female"
+        
+        print(f"\nID: {information[0]}\n{information[1]} {information[2]} is {information[3]} years old and has worked {information[6]} years at this school.\nThey teach {information[5]} and their gender is {gender}")
+        input("(press enter to continue)")
+        os.system('cls')
+        return
+
+
 while True:
     print(''''
 ███    ███ ███████ ███    ██ ██    ██ 
@@ -208,7 +343,8 @@ while True:
         os.system('cls')
         #These two lines prepear to return the user to the menu, request for them to press enter when finished and then clears the terminal
     elif user_input == 3:
-        pass
+        os.system('cls')
+        search()
     elif user_input == 4:
         os.system('cls')
         all_teachers()
