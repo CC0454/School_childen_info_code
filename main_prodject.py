@@ -187,6 +187,7 @@ def search():
 ███████ █████   ███████ ██████  ██      ███████ 
      ██ ██      ██   ██ ██   ██ ██      ██   ██ 
 ███████ ███████ ██   ██ ██   ██  ██████ ██   ██\n''')
+        #like the menu, this code uses a while true statment to loop until finished.
         user_input = input("Please enter one option:\n1) Search students\n2) Search teachers\n3) Exit search\n:")
         try:
             user_input = int(user_input)
@@ -194,6 +195,8 @@ def search():
             input("\nPlease ensure you are entering a number on the range of 1 to 2.\n(press enter to continue)")
             os.system('cls')
             continue
+        #these lines take the users choices input and checks if it's a number by trying to convert it into an integer.
+         
         if user_input == 1:
             student_search()
         elif user_input == 2:
@@ -201,9 +204,11 @@ def search():
         elif user_input == 3:
             os.system('cls')
             break
+        #these lines check which number and does somthing accordingly. Two of which call functions, allowing for easy acsess to the actual searching part of the code.
         else:
             input("\nPlease ensure you are entering a number on the range of 1 to 3.\n(press enter to continue)")
             os.system('cls')
+        #This line is runoff for the other three, if there is a number larger than three or smaller than one entered, the code tells the user and resets the menu
 
 def student_search():
 
@@ -214,30 +219,41 @@ def student_search():
         input("Please ensure you are entering a number on a range of 1 to 3\n(Press enter to continue)")
         os.system('cls')
         return
+     #These two lines take input and check if they are a number, alike all the others used. 
+
     if user_choice == 1:
         query = "SELECT * FROM student_table WHERE ID = ?"
         user_search = input("\nEnter the ID you are searching for\n:")
         error = "There is no student ID in the database that matches "
+        try:
+            user_search = int(user_search)
+        except ValueError:
+            input("Please ensure you are entering an number ID\n(Press enter to continue)")
+            os.system('cls')
+            return
     elif user_choice == 2:
         query = "SELECT * FROM student_table WHERE First_name = ?"
         user_search = input("\nPlease enter the first name you are searching for\n:")
         error = "There is no student first name in the database that matches "
+        user_search = user_search.capitalize()
     elif user_choice == 3:
         query = "SELECT * FROM student_table WHERE Last_name = ?"
         user_search = input("\nPlease enter the last name that you are searching for\n:")
         error = "There is no student last name in the database that matches "
+        user_search = user_search.capitalize()
     else:
         input("Please ensure you are entering a number on a range of 1 to 3\n(Press enter to continue)")
         os.system('cls')
         return
-    user_search_cap = user_search.capitalize()
-    cursor.execute(query, (user_search_cap, ))
+    #There is an explanation of how this works in the teacher_search funtion. Both if, elif and else statment blocks work the exact same with the only different being 'teachers' being changes to 'students'
+    cursor.execute(query, (user_search, ))
     student_information = cursor.fetchall()
+
     if student_information == []:
        input(error + str(user_search) + "\n(Press enter to continue)")
        os.system('cls')
        return
-    
+    #This line checks if there is any data in student information, if there isn't it means there wasnt any data that matched in the database
     for information in student_information:
         if information[4] == 0:
             gender = "Male"
@@ -255,10 +271,12 @@ def student_search():
         
         print(f"\nID: {information[0]}\n{information[1]} {information[2]} is {information[3]} years old in year {information[5]}.\nTheir gender is {gender}")
         print(condition)
-
+        #The difference between this code block and the teachers code block is I have to worry about a third gender, non_binary and a if/elif/else statment to see how the students are going in the year
+        # All of this is added together and printed in a formatted fashon. if there are more than one person with a first or last name, the for loop will cycle through and print all of them.
         input("(press enter to continue)")
         os.system('cls')
         return
+    #This line asks if the user is ready to return to the menu and waits for them to press enter. it then clears the terminal and returns to the search menu.
 
 def teacher_search():
     user_choice = input("\nPlease enter one option:\n1) Search by ID\n2) Search by first name\n3) Search by last name\n:")
@@ -268,6 +286,8 @@ def teacher_search():
         input("Please ensure you are entering a number on a range of 1 to 3\n(Press enter to continue)")
         os.system('cls')
         return
+    #These two lines take input and check if they are a number, alike all the others used. 
+
     if user_choice == 1:
         query = "SELECT * FROM teacher_table WHERE ID = ?"
         user_search = input("\nEnter the ID you are searching for\n:")
@@ -292,16 +312,25 @@ def teacher_search():
         input("Please ensure you are entering a number on a range of 1 to 3\n(Press enter to continue)")
         os.system('cls')
         return
-    
+    """
+    I found this code to need to only use one cursor.execute query. I found this as my code before would have used three, making an error to occur
+    To fix this, I put evreything in a comment and reused loads of code, saving lots of time and effort. Walking through each if/elif/else statement here
+    The first line checks which number it is and runs an if statment acoordingly. The first line in the first if statment is the data fetching query.
+    This query is made of two parts, the query containing the content and what the cursor should be searching for and the second one is the users search
+    letting them seatch the database. The second line takes an input from the user for what they would want to search for and assigns it to the varible
+    user_search. Next in line is the errror message, it contains an error for it the search went wrong, The code is tailord to each user search choice.
+    in ID's search statment, there is a number converter/checker. this is because the numbers that need to be checked in the database are integers and if a 
+    text is put in the brackets, it fails. in the end brackets of the first and last name, there is a capitalise statment. this is because in the database
+    all first and last names are capitalised.
+    """
     cursor.execute(query, (user_search, ))
     teacher_information = cursor.fetchall()
-    print(teacher_information)
-
+    #this line takes the query and the users search and gets all of the data from the table. 
     if teacher_information == []:
        input(error + str(user_search) + "\n(Press enter to continue)")
        os.system('cls')
        return
-    
+    #These lines check if the brackets are empty. if they are, it means there is no data in the database that matches the users search.
     for information in teacher_information:
         if information[4] == 0:
             gender = "Male"
@@ -312,8 +341,7 @@ def teacher_search():
         input("(press enter to continue)")
         os.system('cls')
         return
-
-
+    #These lines take the data, see if its a male or female and prints it out in a formatted way. It then asks the user to press enter to continue and resets to the search menu
 while True:
     print(''''
 ███    ███ ███████ ███    ██ ██    ██ 
